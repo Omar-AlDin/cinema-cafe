@@ -708,9 +708,9 @@ const renderDetails = function (movie) {
     const movieReleaseDate = movie.release_date;
 
     if (!movieReleaseDate) {
-        document.querySelector('#tab-title').textContent = `${movie.title}`;
+        document.querySelector('#tab-title').textContent = `${movie.title} | Cinema Cafe`;
     } else {
-        document.querySelector('#tab-title').textContent = `${movie.title} (${movie.release_date.split('-')[0]})`;
+        document.querySelector('#tab-title').textContent = `${movie.title} (${movie.release_date.split('-')[0]}) | Cinema Cafe`;
     }
 
 
@@ -800,9 +800,9 @@ const renderDetailsTv = function (tv) {
     const releaseDate = new Date(tvDate);
 
     if (!tvDate) {
-        document.querySelector('#tab-title').textContent = `${tv.name}`;
+        document.querySelector('#tab-title').textContent = `${tv.name} | Cinema Cafe`;
     } else {
-        document.querySelector('#tab-title').textContent = `${tv.name} (${tv.first_air_date.split('-')[0]})`;
+        document.querySelector('#tab-title').textContent = `${tv.name} (${tv.first_air_date.split('-')[0]}) | Cinema Cafe`;
     }
     const creator = tv.created_by.map(create => create.name).join(', ');
     creatorTv.textContent = creator || "N/A";
