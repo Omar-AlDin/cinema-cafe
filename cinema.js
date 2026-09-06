@@ -230,7 +230,9 @@ const hiddenGems = [
     { id: 159037, type: 'movie' },
     { id: 21484, type: 'movie' },
     { id: 10294, type: 'movie' },
-    { id: 44156, type: 'tv' }
+    { id: 44156, type: 'tv' },
+    { id: 1698999, type: 'movie' }
+
 ]
 
 // const minVotes = currentFilters
