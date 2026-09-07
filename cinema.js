@@ -231,7 +231,9 @@ const hiddenGems = [
     { id: 21484, type: 'movie' },
     { id: 10294, type: 'movie' },
     { id: 44156, type: 'tv' },
-    { id: 1698999, type: 'movie' }
+    { id: 1698999, type: 'movie' },
+    { id: 9778, type: 'movie' }
+
 
 ]
 
