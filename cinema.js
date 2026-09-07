@@ -237,21 +237,29 @@ const hiddenGems = [
 
 // const minVotes = currentFilters
 //Movies
-const fetchMovies = async function (page = 1) {
 
+const fetchMovies = async function (page = 1) {
     if (isLoading) return
     isLoading = true;
-
     const signal = currentFetchController ? currentFetchController.signal : undefined;
     // console.log("Signal", signal)
+    let minVote
     try {
         const isArabic = currentFilters.language === "ar";
 
-        const minVote = isArabic ? 5 : (currentFilters.keyword ? 5 : voteCount);
+        if (voteCount) {
+            minVote = isArabic ? 5 : (currentFilters.keyword ? 5 : voteCount);
+        } else if (currentFilters.sortBy === 'vote_average.desc') {
+            minVote = isArabic ? 10 : 200;
+        } else {
+            minVote = isArabic ? 5 : (currentFilters.keyword ? 5 : 100);
+        }
+
         const effectiveMinRating = currentFilters.minRating || (isArabic ? '5.5' : '');
 
         let movieUrl = `${BASE_URL}/discover/movie?sort_by=${currentFilters.sortBy}&page=${page}&vote_count.gte=${minVote}&include_adult=false`;
         // const effective
+
 
         if (currentFilters.genre) {
             movieUrl += `&with_genres=${currentFilters.genre}`;
@@ -372,7 +380,7 @@ const genresMovies = async function () {
             genreSelect.append(option);
         })
     } catch (err) {
-        console.log(`Something went wrong: ${err.message}`)
+        console.error(`Genre loading failed: ${err.message}`)
     }
 
 }
@@ -489,8 +497,10 @@ const tvImage = async function (page = 1) {
     try {
 
         const isArabic = currentFiltersTv.language === "ar";
-        const minVote = isArabic ? 2 : 50;
-
+        let minVote = isArabic ? 2 : 50;
+        if (currentFiltersTv.sortBy === 'vote_average.desc') {
+            minVote = isArabic ? 5 : 100;
+        }
         const effectiveRating = currentFiltersTv.minRating || (isArabic ? '5.5' : '');
         if (!tvGrid) throw new Error("Movies is currenlty displayed")
         let tvUrl = `${BASE_URL}/discover/tv?sort_by=${currentFiltersTv.sortBy}&page=${page}&vote_count.gte=${minVote}&include_adult=false`;
@@ -2126,9 +2136,9 @@ const renderNew = async function () {
         const sixWeeksAgo = getDaysAgo(45);
 
 
-        const movieUrl = `${BASE_URL}/discover/movie?sort_by=primary_release_date.desc&primary_release_date.gte=${sixWeeksAgo}&primary_release_date.lte=${today}&vote_count.gte=20&include_adult=false`;
+        const movieUrl = `${BASE_URL}/discover/movie?sort_by=primary_release_date.desc&primary_release_date.gte=${sixWeeksAgo}&primary_release_date.lte=${today}&vote_count.gte=20&with_original_language=en&include_adult=false`;
 
-        const tvUrl = `${BASE_URL}/discover/tv?sort_by=first_air_date.desc&first_air_date.gte=${sixWeeksAgo}&first_air_date.lte=${today}&vote_count.gte=7&include_adult=false`;
+        const tvUrl = `${BASE_URL}/discover/tv?sort_by=first_air_date.desc&first_air_date.gte=${sixWeeksAgo}&first_air_date.lte=${today}&vote_count.gte=7&&with_original_language=en&include_adult=false`;
 
         const [movieRes, tvRes] = await Promise.all([
             fetch(movieUrl, options),
