@@ -344,7 +344,7 @@ nav a:hover {
     color: #d1d5db;
     border-left: 3px solid #e50914;
     padding-left: 12px;
-    margin: 20px 0 0px 0;
+    margin: -1px 0 -0.5px 0;
 }
 
 .sub-crew {
@@ -1687,6 +1687,7 @@ html {
     cursor: pointer;
     opacity: 0;
     transition: opacity 0.2s ease, background 0.2s ease;
+    user-select: none;
 }
 
 .home-backdrop:hover .hero-arrow {
