@@ -3445,7 +3445,7 @@ html {
   }
 
   .genres {
-    margin-top: 18px;
+    margin-top: 16px;
     margin-bottom: 2px;
   }
 
@@ -3711,7 +3711,7 @@ html {
 
   .episode-still {
     aspect-ratio: 16 / 9;
-    min-height: 250px;
+    min-height: 280px;
     width: 100%;
     /* height: 112px; */
     object-fit: cover;
@@ -3778,7 +3778,7 @@ html {
 
   .overview-tablet {
     display: block;
-    margin-top: 40px;
+    margin-top: 37px;
   }
 
   .overview-tablet .overview {
