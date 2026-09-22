@@ -471,9 +471,9 @@ const tvImage = async function (page = 1) {
 
   try {
     const isArabic = currentFiltersTv.language === "ar";
-    let minVote = isArabic ? 2 : 50;
+    let minVote = isArabic ? 2 : 35;
     if (currentFiltersTv.sortBy === "vote_average.desc") {
-      minVote = isArabic ? 5 : 100;
+      minVote = isArabic ? 5 : 200;
     }
     const effectiveRating =
       currentFiltersTv.minRating || (isArabic ? "5.5" : "");
@@ -647,12 +647,24 @@ const setTagline = function (taglineText) {
   });
 };
 
+const setGenre = function (genrePill) {
+  document.querySelectorAll(".genres").forEach((el) => {
+    if (genrePill) {
+      el.textContent = genrePill;
+      el.classList.remove("hidden");
+    } else {
+      el.classList.add("hidden");
+    }
+  });
+};
+
 //Image URL Function
 const imageUrl = (path, size = "original") =>
   path ? `https://image.tmdb.org/t/p/${size}${path}` : "placeholder.jpg";
 
 // DOM Function
 const backdropImageTv = document.querySelector(".backdrop-tv");
+const noBackdrop = document.querySelector(".no-backdrop");
 const backdropImage = document.querySelector(".backdrop");
 const posterImage = document.querySelector(".poster");
 const actorsContainer = document.querySelector(".cast-list");
@@ -666,8 +678,11 @@ const overview = document.querySelector(".overview");
 // const title = document.querySelector('#title')
 
 const renderDetails = function (movie) {
-  setAllText(".js-title", movie.title);
-
+  if (movie.original_language === "en" || movie.original_language === "ar") {
+    setAllText(".js-title", movie.original_title);
+  } else {
+    setAllText(".js-title", movie.title);
+  }
   // const rating = document.querySelector('#movie-rating')
   setAllText(".js-movie-rating", movie.vote_average.toFixed(1) || "N/A");
 
@@ -807,9 +822,13 @@ const renderDetailsTv = function (tv) {
         const pill = document.createElement("span");
         pill.classList.add("genre-pill");
         pill.textContent = el.name;
-        container.append(pill);
+        if (pill) {
+          container.append(pill);
+          container.classList.remove("hidden");
+        } else {
+          container.classList.add("hidden");
+        }
       });
-      container.classList.remove("hidden");
     });
   };
 
@@ -927,7 +946,15 @@ const renderDetailsTv = function (tv) {
 
   setAllText(".language-span", formatedLanguage(tv.original_language));
 
-  setAllText(".js-title", tv.original_name);
+  if (tv.original_language === "ar" || tv.original_language === "en") {
+    setAllText(".js-title", tv.original_name);
+
+    console.log("NOT ARABIC AND NOT ENGLISH");
+  } else {
+    setAllText(".js-title", tv.name);
+
+    console.log("ARABIC OR ENGLISH");
+  }
 
   document.querySelector(".next-episode").textContent = nextEpisode(
     tv.next_episode_to_air?.air_date,
@@ -1019,9 +1046,15 @@ const renderEpisode = function (seasonData) {
   const episodes = seasonData.episodes || [];
   episodes.forEach((ep) => {
     const size = isTablet ? "w780" : "w500";
-    const image = ep.still_path
-      ? imageUrl(ep.still_path, size)
-      : "placeholder.jpg";
+    let image = null;
+    let imgClass = null;
+    if (ep.still_path) {
+      image = imageUrl(ep.still_path, size);
+      imgClass = "episode-still";
+    } else {
+      image = "new-background-placeholder.png";
+      imgClass = "no-episode-still";
+    }
 
     const rating = ep.vote_average ? ep.vote_average.toFixed(1) : "N/A";
     const runtimeText = ep.runtime
@@ -1032,7 +1065,7 @@ const renderEpisode = function (seasonData) {
       "beforeend",
       `
         <div class = "episode-card">
-<img class = "episode-still" src = "${image}" alt= "${ep.name}">
+<img class = "${imgClass}" src = "${image}" alt= "${ep.name}">
 <div class = "episode-info">
 <div class = "episode-header">
 <span class = "episode-number">${ep.episode_number}</span>
@@ -1144,7 +1177,9 @@ const formatedCurrency = function (curr) {
 //Formated Poster and Backdrop Function
 const formatedImage = function (movie) {
   return {
-    backdrop: imageUrl(movie.backdrop_path),
+    backdrop: movie.backdrop_path
+      ? imageUrl(movie.backdrop_path)
+      : "new-background-placeholder.png",
     poster: imageUrl(
       movie.poster_path || movie.profile_path || "placeholder.jpg",
     ),
@@ -1509,19 +1544,32 @@ const detailsImage = async function () {
 
       const tvRes = await fetch(tvUrl, options);
       const tvData = await tvRes.json();
-      // console.log("TV Data", tvData)
+      console.log("TV Data", tvData);
       if (!tvRes.ok)
         throw new Error(`HTTP request went wrong: ${tvRes.status}`);
 
       if (backdropImageTv) {
-        backdropImageTv.src = imageUrl(tvData.backdrop_path);
-        backdropImageTv.alt = `${tvData.name} Backdrop`;
-        document
-          .querySelector(".ambient-glow")
-          .style.setProperty(
-            "--glow-image",
-            `url(${imageUrl(tvData.backdrop_path)})`,
-          );
+        if (tvData.backdrop_path) {
+          backdropImageTv.classList.remove("no-backdrop");
+          backdropImageTv.src = imageUrl(tvData.backdrop_path);
+          backdropImageTv.alt = `${tvData.name} Backdrop`;
+          document
+            .querySelector(".ambient-glow")
+            .style.setProperty(
+              "--glow-image",
+              `url(${imageUrl(tvData.backdrop_path)})`,
+            );
+        } else {
+          noBackdrop.classList.remove("backdrop-tv");
+          backdropImageTv.src = "new-background-placeholder.png";
+          backdropImageTv.alt = `No Backdrop`;
+          document
+            .querySelector(".ambient-glow")
+            .style.setProperty(
+              "--glow-image",
+              `url(${imageUrl("new-background-placeholder.png")})`,
+            );
+        }
       }
       renderDetailsTv(tvData);
       const mediaOk = await mediaAsset(movieId);
@@ -1537,7 +1585,7 @@ const detailsImage = async function () {
       const movieRes = await fetch(moviesUrl, options);
 
       const movieData = await movieRes.json();
-      // console.log(movieData)
+      console.log(movieData);
 
       const images = formatedImage(movieData);
       // console.log(images)
