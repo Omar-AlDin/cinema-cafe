@@ -1,245 +1,289 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<!-- Home, Genres, Browse, Search, Details -->
+  <!-- Home, Genres, Browse, Search, Details -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cinema Cafe | Home</title>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-</head>
-
-<body>
-    <header class="head-bar">
-        <nav class="main-nav">
-            <a href="index.html" class="active-top">Home</a>
-            <a href="genres.html">Genres</a>
-            <a href="browse.html">Browse</a>
-            <a href="search.html">Search</a>
-
-        </nav>
+  <body>
+    <header class="head-bar head-bar--overlay">
+      <nav class="main-nav">
+        <a href="index.html" class="active-top">Home</a>
+        <a href="genres.html">Genres</a>
+        <a href="browse.html">Browse</a>
+        <a href="search.html">Search</a>
+      </nav>
     </header>
     <main class="home-container">
+      <section class="home-backdrop-section">
+        <div class="home-backdrop">
+          <div class="hero-carousel">
+            <div
+              class="hero-slide active"
+              style="background-image: url(&quot;&quot;)"
+            ></div>
+          </div>
+          <button
+            class="hero-arrow hero-arrow-left"
+            id="hero-prev"
+            aria-label="Previous"
+          >
+            ‹
+          </button>
+          <button
+            class="hero-arrow hero-arrow-right"
+            id="hero-next"
+            aria-label="Next"
+          >
+            ›
+          </button>
+          <div class="home-backdrop-fade"></div>
 
-        <section class="home-backdrop-section">
-
-            <div class="home-backdrop">
-                <div class="hero-carousel">
-                    <div class="hero-slide active" style="background-image: url('')"></div>
-
-                </div>
-                <button class="hero-arrow hero-arrow-left" id="hero-prev" aria-label="Previous">‹</button>
-                <button class="hero-arrow hero-arrow-right" id="hero-next" aria-label="Next">›</button>
-                <div class="home-backdrop-fade"></div>
-
-                <div class="home-hero-info">
-                    <h1 id="hero-title"></h1>
-                    <p class="home-hero-overview" id="hero-overview">Loading....</p>
-                    <div class="title-info-back" id="hero-meta"></div>
-                    <div class="hero-actions">
-                        <button class="trailer-btn" id="hero-trailer-btn"><i data-lucide="play" class="btn-icon"></i>
-                            Watch Trailer</button>
-                        <a class="btn-details" id="hero-details-link" href=""><i data-lucide="info"
-                                class="btn-icon"></i> More Info
-                        </a>
-                    </div>
-                </div>
-
+          <div class="home-hero-info">
+            <h1 id="hero-title"></h1>
+            <p class="home-hero-overview" id="hero-overview">Loading....</p>
+            <div class="title-info-back" id="hero-meta"></div>
+            <div class="hero-actions">
+              <button class="trailer-btn" id="hero-trailer-btn">
+                <i data-lucide="play" class="btn-icon"></i> Watch Trailer
+              </button>
+              <a class="btn-details" id="hero-details-link" href=""
+                ><i data-lucide="info" class="btn-icon"></i> More Info
+              </a>
             </div>
+          </div>
+        </div>
+      </section>
+      <section class="main-homepage">
+        <div class="popular-header">
+          <div class="popular-toggles">
+            <h2 class="home-section-title">Popular Now</h2>
 
-        </section>
-        <section class="main-homepage">
-            <div class="popular-header">
-                <div class="popular-toggles">
-                    <h2 class="home-section-title">Popular Now</h2>
-
-
-                    <div class="toggle-btn">
-                        <button class="popular-tab active" data-type="movie">Movies</button>
-                        <button class="popular-tab" data-type="tv">TV Shows</button>
-                    </div>
-                </div>
-                <div class="link">
-                    <a href="browse.html?sort=popularity.desc" class="see-all">See all
-                        →</a>
-                </div>
-
+            <div class="toggle-btn">
+              <button class="popular-tab active" data-type="movie">
+                Movies
+              </button>
+              <button class="popular-tab" data-type="tv">TV Shows</button>
             </div>
-            <div class="popular-now">
-                <!-- <img src="movie-1.jpg"> -->
+          </div>
+          <div class="link">
+            <a href="browse.html?sort=popularity.desc" class="see-all"
+              >See all →</a
+            >
+          </div>
+        </div>
+        <div class="popular-now">
+          <!-- <img src="movie-1.jpg"> -->
+        </div>
+
+        <div class="movie-night">
+          <h2 class="home-section-title movie-night">Movie Night</h2>
+          <div class="main-movie-night">
+            <div class="header-movie-night">
+              <span><i data-lucide="popcorn" class="header-icon"></i></span>
+              <h4>Got a place? Start a Movie Night.</h4>
             </div>
+            <p>
+              Bring people together, choose a movie, and create a night around
+              it.
+            </p>
+            <a href="movie-night.html" class="learn-more">Learn More →</a>
+          </div>
+        </div>
 
-            <div class="movie-night">
-                <h2 class="home-section-title movie-night">Movie Night</h2>
-                <div class="main-movie-night">
-                    <div class="header-movie-night">
-                        <span><i data-lucide="popcorn" class="header-icon"></i></span>
-                        <h4>Got a place? Start a Movie Night.</h4>
+        <div class="highly-rated-header">
+          <h2 class="home-section-title">Highly Rated</h2>
+          <a
+            href="browse.html?sort=vote_average.desc&vote_count.gte=300"
+            class="see-all"
+            >See all →</a
+          >
+        </div>
+        <div class="highly-rated-main"></div>
 
-                    </div>
-                    <p>Bring people together, choose a movie, and create a night around it.</p>
-                    <a href="movie-night.html" class="learn-more">Learn More →</a>
-                </div>
+        <div class="hidden-gem-header" id="hidden-gems">
+          <h2 class="home-section-title">Hidden Gems</h2>
+        </div>
+        <div class="hidden-gem-main"></div>
+
+        <div class="genre-header-home">
+          <h2 class="home-section-title">Genres</h2>
+          <a href="genres.html" class="see-all">See all →</a>
+        </div>
+        <div class="genre-container-home">
+          <a
+            href="sub-genre.html?type=movie&genre=horror"
+            class="genre-card horror"
+            style="--genre-color: #8b0000"
+            draggable="false"
+          >
+            <div class="card-img">
+              <img src="movie-4.jpg" alt="Horror" loading="lazy" />
             </div>
+            <span class="available-badge"
+              ><i data-lucide="telescope"></i>Explore</span
+            >
 
-            <div class="highly-rated-header">
-                <h2 class="home-section-title">Highly Rated</h2>
-                <a href="browse.html?sort=vote_average.desc&vote_count.gte=300" class="see-all">See all
-                    →</a>
+            <span class="genre-badge"
+              ><i data-lucide="clapperboard"></i>Movie</span
+            >
+
+            <span class="genre-title">Horror</span>
+          </a>
+
+          <div class="genre-card thriller" style="--genre-color: #331c2d">
+            <div class="card-img">
+              <img src="thriller.jpg" alt="Thriller" loading="lazy" />
             </div>
-            <div class="highly-rated-main">
+            <span class="genre-badge"
+              ><i data-lucide="clapperboard"></i>Movie</span
+            >
+            <span class="genre-title">Thriller</span>
+          </div>
+
+          <div class="genre-card comedy" style="--genre-color: #0090e0">
+            <div class="card-img">
+              <img src="comedy.jpg" alt="Comedy" loading="lazy" />
             </div>
+            <span class="genre-badge"
+              ><i data-lucide="clapperboard"></i>Movie</span
+            >
 
-            <div class="hidden-gem-header" id="hidden-gems">
-                <h2 class="home-section-title">Hidden Gems</h2>
+            <span class="genre-title">Comedy</span>
+          </div>
+
+          <div class="genre-card drama-tv" style="--genre-color: #15803d">
+            <div class="card-img">
+              <img src="drama-tv3.jpg" alt="Drama" loading="lazy" />
             </div>
-            <div class="hidden-gem-main"></div>
+            <span class="genre-badge"><i data-lucide="tv"></i>TV</span>
 
+            <span class="genre-title">Drama</span>
+          </div>
 
-            <div class="genre-header-home">
-                <h2 class="home-section-title">Genres</h2>
-                <a href="genres.html" class="see-all">See all →</a>
+          <div class="genre-card action-tv" style="--genre-color: #1d4ed8">
+            <div class="card-img">
+              <img
+                src="action-tv2.jpg"
+                alt="Action & Adventure"
+                loading="lazy"
+              />
             </div>
-            <div class="genre-container-home">
-                <a href="sub-genre.html?type=movie&genre=horror" class="genre-card horror"
-                    style="--genre-color: #8b0000" draggable="false">
-                    <div class="card-img">
-                        <img src="movie-4.jpg" alt="Horror" loading="lazy">
-                    </div>
-                    <span class="available-badge"><i data-lucide="telescope"></i>Explore</span>
+            <span class="genre-badge"><i data-lucide="tv"></i>TV</span>
 
-                    <span class="genre-badge"><i data-lucide="clapperboard"></i>Movie</span>
+            <span class="genre-title">Action &<br />Adventure</span>
+          </div>
+        </div>
 
-                    <span class="genre-title">Horror</span>
-                </a>
-
-                <div class="genre-card thriller" style="--genre-color: #331C2D ">
-                    <div class="card-img">
-                        <img src="thriller.jpg" alt="Thriller" loading="lazy">
-                    </div>
-                    <span class="genre-badge"><i data-lucide="clapperboard"></i>Movie</span>
-                    <span class="genre-title">Thriller</span>
-
-                </div>
-
-                <div class="genre-card comedy" style="--genre-color: #0090e0">
-                    <div class="card-img">
-                        <img src="comedy.jpg" alt="Comedy" loading="lazy">
-                    </div>
-                    <span class="genre-badge"><i data-lucide="clapperboard"></i>Movie</span>
-
-                    <span class="genre-title">Comedy</span>
-                </div>
-
-                <div class="genre-card drama-tv" style="--genre-color: #15803D">
-                    <div class="card-img">
-                        <img src="drama-tv3.jpg" alt="Drama" loading="lazy">
-                    </div>
-                    <span class="genre-badge"><i data-lucide="tv"></i>TV</span>
-
-                    <span class="genre-title">Drama</span>
-                </div>
-
-                <div class="genre-card action-tv" style="--genre-color: #1D4ED8">
-                    <div class="card-img">
-                        <img src="action-tv2.jpg" alt="Action & Adventure" loading="lazy">
-                    </div>
-                    <span class="genre-badge"><i data-lucide="tv"></i>TV</span>
-
-                    <span class="genre-title">Action &<br>Adventure</span>
-                </div>
+        <div class="movie-game">
+          <h2 class="home-section-title movie-game">Movie Guessing Game</h2>
+          <div class="main-movie-game">
+            <div class="header-movie-game">
+              <span
+                ><i data-lucide="clapperboard" class="header-icon"></i
+              ></span>
+              <h4>HOW WELL DO YOU KNOW MOVIES?</h4>
             </div>
+            <p>
+              Guess movies from subtle clues, build your streak, and prove your
+              film trivia skills.
+            </p>
+            <a
+              href="https://omar-aldin.github.io/Movie/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="play-now"
+              >PLAY NOW</a
+            >
+          </div>
+        </div>
 
-            <div class="movie-game">
-                <h2 class="home-section-title movie-game">Movie Guessing Game</h2>
-                <div class="main-movie-game">
-                    <div class="header-movie-game">
-                        <span><i data-lucide="clapperboard" class="header-icon"></i></span>
-                        <h4>HOW WELL DO YOU KNOW MOVIES?</h4>
+        <div class="new-header">
+          <h2 class="home-section-title">New Releases</h2>
+          <a href="browse.html?sort=primary_release_date.desc" class="see-all"
+            >See all →</a
+          >
+        </div>
+        <div class="new-main"></div>
 
-                    </div>
-                    <p>Guess movies from subtle clues, build your streak, and prove your film trivia skills.</p>
-                    <a href="https://omar-aldin.github.io/Movie/" target="_blank" rel="noopener noreferrer"
-                        class="play-now">PLAY NOW</a>
-                </div>
-            </div>
-
-            <div class="new-header">
-                <h2 class="home-section-title">New Releases</h2>
-                <a href="browse.html?sort=primary_release_date.desc" class="see-all">See all →</a>
-
-            </div>
-            <div class="new-main"></div>
-
-            <div class="upcoming-header">
-                <h2 class="home-section-title">Coming Soon</h2>
-
-            </div>
-            <div class="upcoming-main"></div>
-        </section>
+        <div class="upcoming-header">
+          <h2 class="home-section-title">Coming Soon</h2>
+        </div>
+        <div class="upcoming-main"></div>
+      </section>
     </main>
     <div class="modal hidden">
-        <div class="overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="trailer-name"></h3>
-                    <button class="close-modal">&times;</button>
-                </div>
-                <iframe class="trailer-frame" src="" allowFullscreen></iframe>
-            </div>
+      <div class="overlay">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="trailer-name"></h3>
+            <button class="close-modal">&times;</button>
+          </div>
+          <iframe class="trailer-frame" src="" allowfullscreen></iframe>
         </div>
+      </div>
     </div>
 
     <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="logo-brand-name">
-                        <img src="logo.svg" alt="logo" class="logo">
-                        <h2 class="footer-name">Cinema Cafe</h2>
-
-                    </div>
-                    <p>Discover movies, explore genres, and test your cinema knowledge.</p>
-                </div>
-
-                <div class="footer-links">
-                    <div class="link-group">
-                        <h4>Navigation</h4>
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="genres.html">Genres</a></li>
-                            <li><a href="browse.html">Browse</a></li>
-                            <li><a href="search.html">Search</a></li>
-                        </ul>
-                    </div>
-                    <div class="link-group">
-                        <h4>Attribution</h4>
-                        <p class="tmdb-text">
-                            Data and images provided by <a href="https://www.themoviedb.org/" target="_blank"
-                                rel="noopener noreferrer">TMDB</a>.
-                            This product uses the TMDB API but is not endorsed or certified by TMDB.
-                        </p>
-                    </div>
-                </div>
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="logo-brand-name">
+              <img src="logo.svg" alt="logo" class="logo" />
+              <h2 class="footer-name">Cinema Cafe</h2>
             </div>
+            <p>
+              Discover movies, explore genres, and test your cinema knowledge.
+            </p>
+          </div>
 
-            <div class="footer-divider"></div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Cinema Cafe · Designed & developed by <span>Omar AlDin El-Samman</span>.</p>
+          <div class="footer-links">
+            <div class="link-group">
+              <h4>Navigation</h4>
+              <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="genres.html">Genres</a></li>
+                <li><a href="browse.html">Browse</a></li>
+                <li><a href="search.html">Search</a></li>
+              </ul>
             </div>
+            <div class="link-group">
+              <h4>Attribution</h4>
+              <p class="tmdb-text">
+                Data and images provided by
+                <a
+                  href="https://www.themoviedb.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >TMDB</a
+                >. This product uses the TMDB API but is not endorsed or
+                certified by TMDB.
+              </p>
+            </div>
+          </div>
         </div>
+
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2026 Cinema Cafe · Designed & developed by
+            <span>Omar AlDin El-Samman</span>.
+          </p>
+        </div>
+      </div>
     </footer>
     <script src="cinema.js"></script>
     <script>
-        lucide.createIcons();
+      lucide.createIcons();
     </script>
-
-</body>
-
+  </body>
 </html>

@@ -1,117 +1,104 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<!-- Home, Genres, Browse, Search, Details -->
+  <!-- Home, Genres, Browse, Search, Details -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Browse TV Shows | Cinema Cafe</title>
-    <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <header class="head-bar">
-        <nav class="main-nav">
-            <a href="index.html">Home</a>
-            <a href="genres.html">Genres</a>
-            <a href="browse.html" class="active-top">Browse</a>
-            <a href="search.html">Search</a>
-
-        </nav>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="genres.html">Genres</a>
+        <a href="browse.html" class="active-top">Browse</a>
+        <a href="search.html">Search</a>
+      </nav>
     </header>
     <main class="browse-container">
-        <nav class="sub-nav">
+      <nav class="sub-nav">
+        <a href="browse.html">Movies</a>
+        <a href="tvshow.html" class="active">TV Shows</a>
+      </nav>
+      <section class="select-section">
+        <div class="select-group">
+          <label for="tv-select-sort">Sort By</label>
+          <select id="tv-select-sort" autocomplete="off">
+            <option value="popularity.desc">Most Popular</option>
+            <option value="vote_average.desc">Highest Rated</option>
+            <option value="first_air_date.desc">Newest Releases</option>
+          </select>
+        </div>
 
-            <a href="browse.html">Movies</a>
-            <a href="tvshow.html" class="active">TV Shows</a>
+        <div class="select-group">
+          <label for="tv-genre-select">Genre</label>
+          <select id="tv-genre-select" autocomplete="off">
+            <option value="">All Genres</option>
+          </select>
+        </div>
 
-        </nav>
-        <section class="select-section">
-            <div class="select-group">
-                <label for="tv-select-sort">Sort By</label>
-                <select id="tv-select-sort" autocomplete="off">
-                    <option value="popularity.desc">Most Popular</option>
-                    <option value="vote_average.desc">Highest Rated</option>
-                    <option value="first_air_date.desc">Newest Releases</option>
+        <div class="select-group">
+          <label for="tv-year-sort">Year</label>
+          <select id="tv-year-sort" autocomplete="off">
+            <option value="">All Years</option>
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+            <option value="2019">2019</option>
+            <option value="2018">2018</option>
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+            <option value="2014">2014</option>
+            <option value="2013">2013</option>
+            <option value="2012">2012</option>
+            <option value="2011">2011</option>
+            <option value="2010">2010</option>
+          </select>
+        </div>
+        <div class="select-group">
+          <label for="tv-rating-select">Rating</label>
+          <select id="tv-rating-select" autocomplete="off">
+            <option value="">All Ratings</option>
+            <option value="9">9+ Stars</option>
 
-                </select>
-            </div>
+            <option value="8">8+ Stars</option>
+            <option value="7">7+ Stars</option>
+            <option value="6">6+ Stars</option>
+          </select>
+        </div>
 
-            <div class="select-group">
-                <label for="tv-genre-select">Genre</label>
-                <select id="tv-genre-select" autocomplete="off">
-                    <option value="">All Genres</option>
-                </select>
-            </div>
-
-            <div class="select-group">
-                <label for="tv-year-sort">Year</label>
-                <select id="tv-year-sort" autocomplete="off">
-                    <option value="">All Years</option>
-                    <option value="2026">2026</option>
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                    <option value="2018">2018</option>
-                    <option value="2017">2017</option>
-                    <option value="2016">2016</option>
-                    <option value="2015">2015</option>
-                    <option value="2014">2014</option>
-                    <option value="2013">2013</option>
-                    <option value="2012">2012</option>
-                    <option value="2011">2011</option>
-                    <option value="2010">2010</option>
-
-                </select>
-            </div>
-            <div class="select-group">
-                <label for="tv-rating-select">Rating</label>
-                <select id="tv-rating-select" autocomplete="off">
-                    <option value="">All Ratings</option>
-                    <option value="9">9+ Stars</option>
-
-                    <option value="8">8+ Stars</option>
-                    <option value="7">7+ Stars</option>
-                    <option value="6">6+ Stars</option>
-                </select>
-            </div>
-
-            <div class="select-group">
-                <label for="tv-language-select"></label>
-                <select id="tv-language-select" autocomplete="off">
-                    <option value="">International</option>
-                    <option value="ar">Arabic</option>
-                    <!-- <option value="en">International</option> -->
-                </select>
-            </div>
-        </section>
-        <section class="trending">
-            <!-- <h2>Explore</h2> -->
-            <div class="tv-grid">
-
-
-
-
-            </div>
-            <div class="tv-load-container">
-                <button id="tv-load-btn" style="display: none">Load More</button>
-            </div>
-            <div id="scroll-sentinel-tv"></div>
-
-        </section>
+        <div class="select-group">
+          <label for="tv-language-select">Language</label>
+          <select id="tv-language-select" autocomplete="off">
+            <option value="">International</option>
+            <option value="ar">Arabic</option>
+            <!-- <option value="en">International</option> -->
+          </select>
+        </div>
+      </section>
+      <section class="trending">
+        <!-- <h2>Explore</h2> -->
+        <div class="tv-grid"></div>
+        <div class="tv-load-container">
+          <button id="tv-load-btn" style="display: none">Load More</button>
+        </div>
+        <div id="scroll-sentinel-tv"></div>
+      </section>
     </main>
 
     <script src="cinema.js"></script>
-</body>
-
+  </body>
 </html>

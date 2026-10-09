@@ -514,6 +514,7 @@ nav a:hover {
   );
   top: 0;
   left: 0;
+  width: 100%;
   z-index: 10;
   position: absolute;
 }
@@ -2559,6 +2560,8 @@ html {
 
   .genres {
     margin-bottom: 2px;
+    max-height: 60px; /* ~2 rows of pills + the 8px gap */
+    overflow: hidden;
   }
 
   .backdrop,
@@ -2695,7 +2698,7 @@ html {
     margin: 0;
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 40px;
     width: 100%;
     margin-bottom: 45px;
   }
@@ -2708,12 +2711,16 @@ html {
     align-items: center;
   }
 
+  /* .production-details-header {
+    flex-direction: column;
+  } */
+
   .production-details,
   .financials,
   .tv-metrics {
     display: flex;
     flex-direction: column;
-    flex: 0 1 auto;
+    flex: 1 auto;
     min-width: 0;
     gap: 20px;
   }
@@ -2730,15 +2737,20 @@ html {
     display: block;
     margin-top: 3px;
     font-size: 14px;
-    white-space: nowrap;
+    white-space: wrap;
   }
 
+  .networks .networks-span {
+    max-width: 15ch;
+    word-break: break-word;
+  }
   .production-details-header span,
   .financials-header span,
   .tv-metrics-header span {
     display: inline-flex;
     gap: 10px;
     font-weight: 600;
+    white-space: nowrap;
   }
 
   .media-section {
@@ -2782,7 +2794,7 @@ html {
     margin-left: -20px;
     margin-right: -20px;
     padding: 0 20px;
-    overscroll-behavior: contain;
+    /* overscroll-behavior: contain; */
   }
 
   .media-container {
@@ -3690,7 +3702,7 @@ html {
     margin-left: -20px;
     margin-right: -20px;
     padding: 0 20px;
-    overscroll-behavior: contain;
+    /* overscroll-behavior: contain; */
   }
 
   .media-container {

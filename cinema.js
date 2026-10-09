@@ -726,7 +726,12 @@ const renderDetails = function (movie) {
         const pill = document.createElement("span");
         pill.classList.add("genre-pill");
         pill.textContent = el.name;
-        container.append(pill);
+        if (pill) {
+          container.append(pill);
+          container.classList.remove("hidden");
+        } else {
+          container.classList.add("hidden");
+        }
       });
     });
   };
@@ -792,12 +797,20 @@ const isTv = window.location.pathname.includes("tv-details.html");
 const seasonScroller = document.querySelector(".season-scroller");
 const today = new Date();
 
+const isTablet = window.matchMedia(
+  "(min-width: 600px) and (max-width: 899px)",
+).matches;
+
+const isMobile = window.matchMedia("(max-width: 599px)").matches;
+
+const devicePoster = isTablet || isMobile ? "w500" : "original";
+const deviceBackdrop = isTablet || isMobile ? "w1280" : "original";
 // console.log(isTv)
 const renderDetailsTv = function (tv) {
   if (!tv || tv.success == false) return;
   document
     .querySelectorAll(".poster")
-    .forEach((el) => (el.src = imageUrl(tv.poster_path)));
+    .forEach((el) => (el.src = imageUrl(tv.poster_path, devicePoster)));
   showAll(".poster");
 
   const tvDate = tv.first_air_date;
@@ -822,6 +835,7 @@ const renderDetailsTv = function (tv) {
         const pill = document.createElement("span");
         pill.classList.add("genre-pill");
         pill.textContent = el.name;
+
         if (pill) {
           container.append(pill);
           container.classList.remove("hidden");
@@ -1037,9 +1051,6 @@ const loadSeason = async function (tvId = 113962, season = 1) {
   }
 };
 
-const isTablet = window.matchMedia(
-  "(min-width: 600px) and (max-width: 899px)",
-).matches;
 let image = null;
 const renderEpisode = function (seasonData) {
   seasonEpi.innerHTML = "";
@@ -1176,13 +1187,18 @@ const formatedCurrency = function (curr) {
 
 //Formated Poster and Backdrop Function
 const formatedImage = function (movie) {
+  const path = movie.poster_path || movie.profile_path;
+  const size = isTablet || isMobile ? "w500" : "original";
+
+  // console.log("isMobile:", isMobile, "isTablet:", isTablet);
   return {
     backdrop: movie.backdrop_path
-      ? imageUrl(movie.backdrop_path)
+      ? imageUrl(
+          movie.backdrop_path,
+          isTablet || isMobile ? "w1280" : "original",
+        )
       : "new-background-placeholder.png",
-    poster: imageUrl(
-      movie.poster_path || movie.profile_path || "placeholder.jpg",
-    ),
+    poster: path ? imageUrl(path, size) : "placeholder.jpg",
   };
 };
 
@@ -1208,7 +1224,7 @@ const ratingSpan = document.querySelector(".rating");
 const spans = function (movie) {
   document
     .querySelectorAll(".poster")
-    .forEach((el) => (el.src = imageUrl(movie.poster_path)));
+    .forEach((el) => (el.src = imageUrl(movie.poster_path, "w500")));
   document
     .querySelectorAll(".poster")
     .forEach((el) => (el.alt = `${movie.original_title} Poster`));
@@ -1544,20 +1560,20 @@ const detailsImage = async function () {
 
       const tvRes = await fetch(tvUrl, options);
       const tvData = await tvRes.json();
-      console.log("TV Data", tvData);
+      // console.log("TV Data", tvData);
       if (!tvRes.ok)
         throw new Error(`HTTP request went wrong: ${tvRes.status}`);
 
       if (backdropImageTv) {
         if (tvData.backdrop_path) {
           backdropImageTv.classList.remove("no-backdrop");
-          backdropImageTv.src = imageUrl(tvData.backdrop_path);
+          backdropImageTv.src = imageUrl(tvData.backdrop_path, deviceBackdrop);
           backdropImageTv.alt = `${tvData.name} Backdrop`;
           document
             .querySelector(".ambient-glow")
             .style.setProperty(
               "--glow-image",
-              `url(${imageUrl(tvData.backdrop_path)})`,
+              `url(${imageUrl(tvData.backdrop_path, deviceBackdrop)})`,
             );
         } else {
           noBackdrop.classList.remove("backdrop-tv");
@@ -1585,7 +1601,7 @@ const detailsImage = async function () {
       const movieRes = await fetch(moviesUrl, options);
 
       const movieData = await movieRes.json();
-      console.log(movieData);
+      // console.log(movieData);
 
       const images = formatedImage(movieData);
       // console.log(images)
@@ -1595,7 +1611,10 @@ const detailsImage = async function () {
         backdropImage.alt = `${movieData.title} Backdrop`;
         document
           .querySelector(".ambient-glow")
-          .style.setProperty("--glow-image", `url(${images.backdrop})`);
+          .style.setProperty(
+            "--glow-image",
+            `url(${imageUrl(images.backdrop, deviceBackdrop)})`,
+          );
       }
       const mediaOk = await mediaAsset(movieId);
       if (mediaOk) {
@@ -1783,7 +1802,7 @@ const renderHero = async function (item) {
 
   const rawTitle = isTv ? data.name : data.title;
   if (logoPath) {
-    heroTitle.innerHTML = `<img src="${imageUrl(logoPath)}" alt="${rawTitle}"class="hero-title-logo"/>`;
+    heroTitle.innerHTML = `<img src="${imageUrl(logoPath, isMobile || isTablet ? "w500" : "w780")}" alt="${rawTitle}"class="hero-title-logo"/>`;
   } else {
     heroTitle.textContent = rawTitle;
   }
@@ -1878,7 +1897,8 @@ const fetchHomepageBackdrops = async function () {
       const slide = document.createElement("div");
       slide.classList.add("hero-slide");
       if (index === 0) slide.classList.add("active");
-      slide.style.backgroundImage = `url(${imageUrl(back.data.backdrop_path)})`;
+      slide.style.backgroundImage = `url(${imageUrl(back.data.backdrop_path, isMobile || isTablet ? "w1280" : "original")})`;
+      // console.log("carosel", isMobile, isTablet);
       heroCarousel.append(slide);
     });
 
@@ -2023,7 +2043,7 @@ const renderPopularHome = async function (mediaType = "movie") {
   if (!mainHomePage) return;
 
   try {
-    const url = `${BASE_URL}/discover/${mediaType}?sort_by=popularity_desc`;
+    const url = `${BASE_URL}/discover/${mediaType}?sort_by=popularity.desc`;
     const urlRes = await fetch(url, options);
     const urlData = await urlRes.json();
     if (!urlRes.ok)
