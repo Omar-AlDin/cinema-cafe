@@ -749,7 +749,7 @@ const renderDetails = function (movie) {
 
       const profileImage = imageUrl(act.profile_path, "w185");
 
-      attore.innerHTML = `<img src=${profileImage} alt="${act.name}" class = "cast-image">
+      attore.innerHTML = `<img src=${profileImage} alt="${act.name}" loading="lazy" class = "cast-image">
                 <div class=actor-name-character>
 <h4 class="actor-name">${act.name}</h4>
         <p class="character-name">${act.character}</p>
@@ -945,7 +945,7 @@ const renderDetailsTv = function (tv) {
 
       const profileImage = imageUrl(act.profile_path, "w185");
 
-      attore.innerHTML = `<img src=${profileImage} alt="${act.name}" class = "cast-image">
+      attore.innerHTML = `<img src=${profileImage} alt="${act.name}" loading="lazy" class = "cast-image">
             <h4 class="actor-name">${act.name}</h4>
             <p class="character-name">${act.character}</p>`;
 
@@ -1076,7 +1076,7 @@ const renderEpisode = function (seasonData) {
       "beforeend",
       `
         <div class = "episode-card">
-<img class = "${imgClass}" src = "${image}" alt= "${ep.name}">
+<img class = "${imgClass}" src = "${image}" alt= "${ep.name}" loading="lazy" decoding="async">
 <div class = "episode-info">
 <div class = "episode-header">
 <span class = "episode-number">${ep.episode_number}</span>
@@ -1327,6 +1327,7 @@ const media = document.querySelector(".media-scroll");
 const createBackdrops = function (backdrop, limit = 10) {
   return backdrop.slice(0, limit).map((back) => {
     const img = document.createElement("img");
+    img.loading = "lazy";
     img.classList.add("media-container");
     img.src = imageUrl(back.file_path, "w780");
     img.alt = "Backdrop";
@@ -1340,8 +1341,8 @@ const createVideos = function (videos, limit = 6) {
   return videos.slice(0, limit).map((video) => {
     const vid = document.createElement("iframe");
     vid.classList.add("media-container");
+    vid.loading = "lazy";
     vid.src = `https://www.youtube.com/embed/${video.key}`;
-
     vid.allowFullscreen = true;
     vid.allow =
       "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
@@ -1573,7 +1574,7 @@ const detailsImage = async function () {
             .querySelector(".ambient-glow")
             .style.setProperty(
               "--glow-image",
-              `url(${imageUrl(tvData.backdrop_path, deviceBackdrop)})`,
+              `url(${imageUrl(tvData.backdrop_path, isMobile || isTablet ? "w500" : "w780")})`,
             );
         } else {
           noBackdrop.classList.remove("backdrop-tv");
@@ -1613,7 +1614,7 @@ const detailsImage = async function () {
           .querySelector(".ambient-glow")
           .style.setProperty(
             "--glow-image",
-            `url(${imageUrl(images.backdrop, deviceBackdrop)})`,
+            `url(${imageUrl(images.backdrop, isMobile || isTablet ? "w500" : "w780")})`,
           );
       }
       const mediaOk = await mediaAsset(movieId);

@@ -2567,11 +2567,12 @@ html {
   .backdrop,
   .no-backdrop {
     height: 300px;
+    height: 275px;
   }
 
   .backdrop-tv,
   .no-backdrop {
-    height: 300px;
+    height: 275px;
   }
 
   .btn-trailer {
