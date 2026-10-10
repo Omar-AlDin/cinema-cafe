@@ -1189,7 +1189,6 @@ const formatedCurrency = function (curr) {
 const formatedImage = function (movie) {
   const path = movie.poster_path || movie.profile_path;
   const size = isTablet || isMobile ? "w500" : "original";
-
   // console.log("isMobile:", isMobile, "isTablet:", isTablet);
   return {
     backdrop: movie.backdrop_path
@@ -1570,12 +1569,17 @@ const detailsImage = async function () {
           backdropImageTv.classList.remove("no-backdrop");
           backdropImageTv.src = imageUrl(tvData.backdrop_path, deviceBackdrop);
           backdropImageTv.alt = `${tvData.name} Backdrop`;
-          document
-            .querySelector(".ambient-glow")
-            .style.setProperty(
-              "--glow-image",
-              `url(${imageUrl(tvData.backdrop_path, isMobile || isTablet ? "w500" : "w780")})`,
-            );
+          const glowUrl = imageUrl(
+            tvData.backdrop_path,
+            isMobile || isTablet ? "w500" : "w780",
+          );
+          const preloadGlow = new Image();
+          preloadGlow.src = glowUrl;
+          preloadGlow.onload = () => {
+            document
+              .querySelector(".ambient-glow")
+              .style.setProperty("--glow-image", `url(${glowUrl})`);
+          };
         } else {
           noBackdrop.classList.remove("backdrop-tv");
           backdropImageTv.src = "new-background-placeholder.png";
@@ -1610,12 +1614,18 @@ const detailsImage = async function () {
       if (backdropImage) {
         backdropImage.src = images.backdrop;
         backdropImage.alt = `${movieData.title} Backdrop`;
-        document
-          .querySelector(".ambient-glow")
-          .style.setProperty(
-            "--glow-image",
-            `url(${imageUrl(images.backdrop, isMobile || isTablet ? "w500" : "w780")})`,
-          );
+        const glowUrl = imageUrl(
+          movieData.backdrop_path,
+          isMobile || isTablet ? "w500" : "w780",
+        );
+        console.log(images, "The truth");
+        const preloadGlow = new Image();
+        preloadGlow.src = glowUrl;
+        preloadGlow.onload = () => {
+          document
+            .querySelector(".ambient-glow")
+            .style.setProperty("--glow-image", `url(${glowUrl})`);
+        };
       }
       const mediaOk = await mediaAsset(movieId);
       if (mediaOk) {
