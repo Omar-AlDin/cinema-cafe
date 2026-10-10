@@ -963,11 +963,11 @@ const renderDetailsTv = function (tv) {
   if (tv.original_language === "ar" || tv.original_language === "en") {
     setAllText(".js-title", tv.original_name);
 
-    console.log("NOT ARABIC AND NOT ENGLISH");
+    // console.log("NOT ARABIC AND NOT ENGLISH");
   } else {
     setAllText(".js-title", tv.name);
 
-    console.log("ARABIC OR ENGLISH");
+    // console.log("ARABIC OR ENGLISH");
   }
 
   document.querySelector(".next-episode").textContent = nextEpisode(
@@ -1618,7 +1618,6 @@ const detailsImage = async function () {
           movieData.backdrop_path,
           isMobile || isTablet ? "w500" : "w780",
         );
-        console.log(images, "The truth");
         const preloadGlow = new Image();
         preloadGlow.src = glowUrl;
         preloadGlow.onload = () => {
