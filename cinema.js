@@ -621,7 +621,9 @@ document
 // --------------- Details Page -------------------------
 
 const setAllText = (selector, text) => {
-  document.querySelectorAll(selector).forEach((el) => (el.textContent = text));
+  document
+    .querySelectorAll(selector)
+    .forEach((el) => (el.textContent = text || "N/A"));
 };
 
 const hideAll = (selector) => {
@@ -698,11 +700,14 @@ const renderDetails = function (movie) {
 
   setAllText(".js-movie-certification", certificate || "N/A");
 
-  setAllText(
-    ".js-runtime",
-    (movie.runtime / 60).toFixed(0) + "h" + " " + (movie.runtime % 60) + "m",
-  );
-
+  if (Math.floor(movie.runtime / 60) === 0) {
+    setAllText(".js-runtime", (movie.runtime % 60) + "m");
+  } else {
+    setAllText(
+      ".js-runtime",
+      Math.floor(movie.runtime / 60) + "h" + " " + (movie.runtime % 60) + "m",
+    );
+  }
   setTagline(movie.tagline);
 
   if (overview) setAllText(".overview", movie.overview || "");
@@ -983,12 +988,17 @@ const renderDetailsTv = function (tv) {
   setAllText(".total-episodes-span", totalEpisodes);
 
   // networks
-  const netSpan = document.querySelector(".networks");
+  const netSpan = document.querySelectorAll(".networks");
+  const networksDiv = document
+    .querySelector(".tablet-metadata-main .networks")
+    .closest("div");
+
   const network = tv.networks?.map((net) => net.name).join(", ");
   if (network) {
     setAllText(".networks-span", network);
   } else {
-    netSpan.style.display = "none";
+    netSpan.forEach((el) => (el.style.display = "none"));
+    networksDiv.style.display = "none";
   }
 
   setAllText(".total-season-span", tv.number_of_seasons);
